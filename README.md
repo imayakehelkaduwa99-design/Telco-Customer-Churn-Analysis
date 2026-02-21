@@ -1,11 +1,69 @@
 **Telco Customer Churn Analysis**
-A data science project analyzing and predicting customer churn for a Telco company using machine learning models. The project moves beyond model performance to deliver business-ready insights that show who is at risk, why it matters, and how much money can be saved.
 
 **Project Overview**
-Customer churn directly impacts profitability in subscription-based businesses. This project builds and evaluates machine learning models to:
-1. Predict churn probability for each customer,
-2. Segment customers inti low, medium, and high churn risk groups.
-3. Simulate financial impact, showing how reducing churn translates into real dollar savings.
+Customer Churn is one of the biggest revenue risks for subscription-based companies such as telecom companies. Acquiring new customers is significantly more expensive than retaining existing ones, so being able to **predict which customers are likely to churn and why** is critical for business performance.
+
+This project uses the **Telco Customer Churn dataset (from Kaggle)** to:
+- Build machine learning models to predict customer churn
+- Segment customers into risk groups (Low/Medium/High)
+- Translate model outputs into business impact and revenue-saving scenarios
+- Provide actionable insights for retention strategies
+
+The project goes beyond pure model performance and focuses on **business decision support**: who is at risk, how to prioritize them, and what the financial impact of churn retention could be.
+
+**Problem Statement**
+The telecom company faces ongoing customer churn, which directly impacts revenue and profitability. The business needs to:
+1. Identify customers who are most likely to churn
+2. Understand which factors drive churn risk
+3. Prioritize retention efforts on the highest-risk customers
+4. Estimate the **financial impact of churn reduction strategies
+
+This project addresses these needs by building a churn prediction pipeline and converting model outputs into **risk segments and business impact simulations**.
+
+**Data Source**
+1. Dataset: **Telco Customer Churn Dataset**
+2. Source: Kaggle
+3. File used: Telco_Customer_Churn.csv
+4. Granularity: One row per customer
+5. Key fields include:
+   - Customer demographics
+   - Contract type and tenure
+   - Services used (internet, streaming, security, etc.)
+   - Billing and payment methds
+   - MonthlyCharges, TotalCharges
+   - Target variable: churn (Yes/No)
+  
+**Data Pipeline**
+The end-to-end pipeline implemented in Python:
+**1. Data Ingestion**
+- Load Telco customer data from CSV
+
+**2. Data Cleaning**
+- Standardize and clean the churn target variable
+- Coerce numeric fields (MonthlyCharges, TotalCharges, Tenure)
+- Handle missing and invalid values
+- Drop rows with unusable financial data where necessary
+
+**3. Feature Engineering**
+- Tenure features:
+  1. tenure_years
+  2. tenure_group
+
+- Financial features:
+  1. monthly_to_total_ratio
+
+- Service adoption features:
+  1. Binary flags for services (OnlineSecurity, TechSupport, etc.)
+  2. service_count
+  3. high_engagement
+
+- Billing & Payment behaviour
+  1. paperless
+  2. autopay
+
+- Contract features:
+  1. contract_ordinal
+  2. short_term_
 
 **Two approaches were compared:**
 Balanced recall model: ROC-AUC = 0.839, Recall = 0.55 (better overall discrimination).
