@@ -229,4 +229,4 @@ This project demonstrates:
 
 The analysis helps Telco companies save revenue, improve retention, and boost customer lifetime value. 
 
-
+**Author: Imaya Kehelkaduwa (Analytics and Data Engineering Portfolio)**
