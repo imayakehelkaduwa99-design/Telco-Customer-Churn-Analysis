@@ -63,7 +63,80 @@ The end-to-end pipeline implemented in Python:
 
 - Contract features:
   1. contract_ordinal
-  2. short_term_
+  2. short_term_contract
+  3. high_monthly_in_contract
+
+ - Risk interaction features:
+   1. risk_shortterm_highpay
+   2. risk_lowservices_highpay
+
+**4. Preprocessing**
+- Numeric pipeline: median imputation + standard scaling
+- Categorical pipeline: most-frequent imputation + one-hot encoding
+- Combined using ColumnTransformer
+
+**5. Modeling**
+- Baseline models:
+  1. Logistic Regression (class-weight balanced)
+  2. Random Forest (class-weight balanced)
+- Hyperparameter tuning using cross-validation (GridSearchCV)
+- Final model selected based on performance
+
+**6. Evaluation & Outputs**
+- Metrics:
+  1. ROC-AUC
+  2. PR-AUC
+  3. Precision, Recall, F1
+- Threshold sweep to optimize classification cut-off
+- Exported artificats:
+  1. predictions.csv
+  2. threshold_sweep.csv
+  3. metrics.json
+  4. ROC and Precision-Recall curves
+ 
+**7. Business Simulation**
+- Simulate retention campaigns targeting high-risk customers
+- Estimate:
+  1. Customers saved
+  2. New churn rate
+  3. Percentage churn reduction
+- Visualize impact with charts
+
+**Business Questions Answered**
+This project answers the following key business questions:
+1. **Who is at risk of churning?**
+   - Predicted churn probabilities identify high-risk customers
+  
+2. **How should customers be prioritized?**
+   - Customers are segmented into **Low/Medium/High** risk groups based on predicyed churn probability
+
+3. **What drives churn risk?**
+   - Contract type, service adoption, tenure, and high monthly charges combined with short-term contracts emerge as strong risk indicators.
+  
+4. **Why does this matter financially?**
+   - Simulated retention strategies show how even small improvements in churn reduction can translate into **significant revenue savings**.
+  
+**KPIS & Metrics Produced**
+**Model Performance KPIs**
+- ROC-AUC
+- PR-AUC
+- Precision
+- Recall
+- F1 Score
+- Optimal classification threshold (via threshold sweep)
+
+**Business KPIs**
+- Current churn rate
+- New churn rate after simulated retention campaign
+- Number of customers potentially saved
+- Percentage churn reduction
+- Risk segmentation distribution (Low/Medium/High)
+
+**Models Used**
+- Logistic regression (baseline, class-weighted balanced)
+- Random Forest Classifier (baseline + tuned)
+
+Model selection is based on **predictive performance and business relevance**, with emphasis on recall and PR-AUC for churn capture.
 
 **Two approaches were compared:**
 Balanced recall model: ROC-AUC = 0.839, Recall = 0.55 (better overall discrimination).
@@ -100,6 +173,12 @@ By implemneting churn prediction and targeted retention:
 4. Stronger Lifetime Value (LTV) - Retaining customers longer increases cross-sell and upsell opportunities.
 This connects **data science outputs** directly to **business outcomes**
 
+**Key Insights**
+- Short-term (month-to-month) contracts combined with high monthly charges significantly increase churn risk.
+- Customers with fewer services and low engagement are more likely to churn.
+- High-recall models are more suitable for retention use cases, even if precision is slighly lower.
+- Translating ML outputs into **financial impact** is crucial for business adoption.
+
 **Tech Stack**
 Python: Data cleaning, model building, and visualization.
 Pandas, Numpy: Data wrangling.
@@ -107,23 +186,46 @@ Scikit-learn: Classification models and evaluation (Logistic Regression, Random 
 Matplotlib, Seaborn: Visual storytelling.
 Jupyter Notebook: Exploration and Presentation.
 
-**Key Learnings**
-High recall models are often preferred in retention use cases, even at the cost of lower precision.
-Translating machine learning results into dollar impact is crucial to win business buy-in.
-Visual storytelling bridges the gap between technical outputs and executive decision-making.
+**Recommendations**
+- Prioritize retention campaigns on **high-risk segments** identified by the model.
+- Focus on:
+  1. Month-to-month customers with high monthly charges
+  2. Low service adoption customers
+
+- Use churn probabilities to:
+  1. Personalise offers
+  2. Optimise marketing spend
+  3. Improve long-term customer lifetime value (LTV)
 
 **How to Run**
-Clone the repository and install dependencies:
-git clone https://github.com/<your-username>/telco-customer-churn-analysis.git
-cd telco-customer-churn-analysis
-pip install -r requirements.txt
-jupyter notebook Telco_Customer_Churn_Prediction_Model.ipynb
+1. Clone the repository:
 
-**Takeaway**
-This project is more than a churn prediction model, it is a business case:
-Who will churn - Prediction
-Which customers matter most - Segmentation
-Why the business should act - Impact simulation
+   git clone https://github.com/imayakehelkaduwa99-design/telco-customer-churn-analysis.git
+cd telco-customer-churn-analysis
+
+2. Install dependencies:
+   pip install -r requirements.txt
+
+3. Run the notebook or script:
+   jupyter notebook Telco_Customer_Churn_Prediction_Model.ipynb
+
+4. Outputs will be saved to:
+   /outputs
+
+Including:
+1. predictions.csv
+2. threshold_sweep.csv
+3. metrics.json
+4. roc_curve.png
+5. pr_curve.png
+
+**Portfolio Note**
+This project demonstrates:
+1. End-to-end ML pipeline design
+2. Feature engineering for business problems
+3. Model evaluation and tuning
+4. Translating data science into **business impact**
+5. Executive-ready insights and visual storytelling
 
 The analysis helps Telco companies save revenue, improve retention, and boost customer lifetime value. 
 
